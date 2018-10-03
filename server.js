@@ -10,6 +10,10 @@ var async = require('async');
 var socketio = require('socket.io');
 var express = require('express');
 
+
+var getdata = require('test_data/getdata.json');
+var postdata = require('test_data/postdata.json');
+
 //
 // ## SimpleServer `SimpleServer(obj)`
 //
@@ -77,6 +81,36 @@ function broadcast(event, data) {
     socket.emit(event, data);
   });
 }
+
+//Get a review
+router.get('/review/:reviewid', function(req, res){
+    res.json(getdata);
+});
+
+//Get random reviews by stars
+router.get('/review/:n/:stars', function(req, res){
+    res.json(getdata);
+});
+
+//Get random reviews by dat
+router.get('/review/:n/:from_date/:to_date', function(res, req){
+    res.json(getdata);
+});
+
+//Add a review
+router.post('/review', function(req, res) {
+    res.json(postdata);
+});
+
+//Update a review
+router.put('/:reviewid', function(req, res){
+    res.json(postdata);
+});
+
+//Delete a review
+router.delete('/:reviewid', function(req, res){
+    res.json(postdata);
+});
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
