@@ -10,6 +10,8 @@ var async = require('async');
 var socketio = require('socket.io');
 var express = require('express');
 
+var bodyparser = require('body-parser');
+var jsonparser = bodyparser.json();
 
 var getdata = require('test_data/getdata.json');
 var postdata = require('test_data/postdata.json');

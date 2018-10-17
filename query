@@ -1,0 +1,150 @@
+db.students.find(
+{
+  age: 
+  {
+    $gt: 18
+  }
+}
+);
+
+db.students.find(
+{
+  age:
+  {
+    $gt: 18
+  }
+}
+);
+
+//age less than 21 named Alice
+db.students.find(
+{
+  $and: [{name: "Alice"},
+         {age: {$lt: 21}}
+        ]
+});
+
+//grades gte 80
+db.students.find({
+  grades: { $gte : 80}
+});
+
+
+db.students.find(
+  {},        // Criteria, or all documents
+  { 
+    age : 0,
+    name: 1
+  });               // error
+  
+  
+  
+db.students.find(
+  {},        // Criteria, or all documents
+  { 
+    _id : 0,
+    age : 1
+  });
+  
+db.students.insert(  
+  {
+  name: "Jordan",
+  dorm: {
+    name: "Raburn",
+    room: "304"
+  },
+  classes: [
+    { name: "Databases", days: ["Monday", "Wednesday"], credits: 3 },
+    { name: "Advanced Databases", days: ["Tuesday", "Thursday"] , credits: 3 },
+  ]
+}
+)
+
+db.students.insert(  
+  {
+  name: "Tori",
+  dorm: {
+    name: "Keller",
+    room: "504"
+  },
+  classes: [
+    { name: "Databases", days: ["Monday", "Wednesday"], credits: 3 },
+    { name: "Operating Systems", days: ["Tuesday", "Thursday"] , credits: 3 },
+  ]
+}
+)
+db.students.insert(  
+  {
+  name: "Alex",
+  dorm: {
+    name: "Wesleyan",
+    room: "210"
+  },
+  classes: [
+    { name: "Operating Systems", days: ["Tuesday", "Thursday"], credits: 3 },
+    { name: "Advanced Databases", days: ["Tuesday", "Thursday"] , credits: 3 },
+  ]
+}
+)
+
+
+db.students.find({
+  "classes.days": "Thursday" //when you descend into properties, have to put in quotes
+});
+
+db.students.find({
+  "classes.credits" : {$gte: 2}
+
+});
+
+
+db.students.insert({_id: 12345, name: "Gary", age: 44});
+
+db.students.update({_id:12345}, {age:45});
+
+db.students.find({_id:12345});
+// { "_id" : 12345, "age" : 45 }
+
+
+db.students.remove({_id:12345}); //remove old 
+
+db.students.insert({_id: 12345, name: "Gary", age: 44});
+
+db.students.update(
+  { _id : 12345 }, //what doc to update
+  { $set : 
+    { 
+      age : 45 //set the age to 45
+    }
+  }
+);
+
+db.students.find({_id:12345});
+
+db.students.update({},          //SHOULD update all records but doesnt without multi:true
+                  { $inc : {age:1} }
+                  );
+                  
+db.students.find({}, {_id: 0, age:1});
+
+
+db.students.update(
+  {},                  //Match all documents
+  { $inc: {age:1} },   //Increment the age by one
+  { multi:true }       //Update more than 1 document
+);
+
+
+db.students.update(
+{$eq : {age:1}},
+{$unset: {age: "" }},
+{multi: true});
+
+db.students.update(
+{$eq : {name: "Alice"}},
+{$set: {grade: doc.grades}}
+);
+
+
+
+// .pretty after findmakes everything more readable
